@@ -1,7 +1,7 @@
 <script>
     import layout from "../Stores/layout";
     import { header } from "../constants/constants";
-    let value = "";
+    let value = "5";
     layout.subscribe( val => {
         value = val;
     })

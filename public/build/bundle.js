@@ -2830,23 +2830,23 @@ var app = (function () {
     			option1 = element("option");
     			t5 = text(t5_value);
     			attr_dev(div0, "class", "left svelte-llh68z");
-    			add_location(div0, file$2, 16, 4, 283);
+    			add_location(div0, file$2, 16, 4, 284);
     			attr_dev(div1, "class", "default svelte-llh68z");
-    			add_location(div1, file$2, 18, 8, 354);
+    			add_location(div1, file$2, 18, 8, 355);
     			option0.__value = header.fiveColumnValue;
     			option0.value = option0.__value;
-    			add_location(option0, file$2, 20, 12, 505);
+    			add_location(option0, file$2, 20, 12, 506);
     			option1.__value = header.twoColumnValue;
     			option1.value = option1.__value;
-    			add_location(option1, file$2, 21, 12, 585);
+    			add_location(option1, file$2, 21, 12, 586);
     			attr_dev(select, "class", "dropdown svelte-llh68z");
     			attr_dev(select, "name", "dropdown");
     			if (/*value*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[2].call(select));
-    			add_location(select, file$2, 19, 8, 410);
+    			add_location(select, file$2, 19, 8, 411);
     			attr_dev(div2, "class", "right svelte-llh68z");
-    			add_location(div2, file$2, 17, 4, 326);
+    			add_location(div2, file$2, 17, 4, 327);
     			attr_dev(header_1, "class", "head svelte-llh68z");
-    			add_location(header_1, file$2, 15, 0, 257);
+    			add_location(header_1, file$2, 15, 0, 258);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2902,7 +2902,7 @@ var app = (function () {
     function instance$2($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Header', slots, []);
-    	let value = "";
+    	let value = "5";
 
     	layout.subscribe(val => {
     		$$invalidate(0, value = val);

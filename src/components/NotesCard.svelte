@@ -1,6 +1,6 @@
 <script>
     import { cardDimensions } from "../constants/constants";
-    import notes from "../Stores/notes-store"
+    import notes from "../stores/notesStore"
     import BackDrop from "./Modal.svelte";
     import DeleteModal from "./DeletePopup.svelte";
     import layout from "../Stores/layout";

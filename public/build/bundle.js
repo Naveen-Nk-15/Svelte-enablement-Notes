@@ -121,12 +121,6 @@ var app = (function () {
             node.parentNode.removeChild(node);
         }
     }
-    function destroy_each(iterations, detaching) {
-        for (let i = 0; i < iterations.length; i += 1) {
-            if (iterations[i])
-                iterations[i].d(detaching);
-        }
-    }
     function element(name) {
         return document.createElement(name);
     }
@@ -729,6 +723,26 @@ var app = (function () {
         noButton : "no",
         yesButton : "yes"
     };
+
+
+    const colors = [
+        {
+            id:1,
+            backGroundColor: "#c2e891",
+        },
+        {
+            id:2,
+            backGroundColor: "#d5e2f6",
+        },
+        {
+            id:3,
+            backGroundColor: "#dededf",
+        },
+        {
+            id:4,
+            backGroundColor: "#d9cdcf",
+        }
+    ];
 
     const subscriber_queue = [];
     /**
@@ -1520,20 +1534,20 @@ var app = (function () {
     			if (if_block) if_block.c();
     			if_block_anchor = empty();
     			attr_dev(h1, "class", "header svelte-ba5lgm");
-    			add_location(h1, file$6, 53, 4, 1836);
+    			add_location(h1, file$6, 53, 4, 1835);
     			attr_dev(p, "class", "content svelte-ba5lgm");
-    			add_location(p, file$6, 54, 4, 1872);
+    			add_location(p, file$6, 54, 4, 1871);
     			attr_dev(div0, "class", "date svelte-ba5lgm");
-    			add_location(div0, file$6, 56, 8, 1938);
+    			add_location(div0, file$6, 56, 8, 1937);
     			set_custom_element_data(ion_icon, "class", "delete svelte-ba5lgm");
     			set_custom_element_data(ion_icon, "name", "trash-outline");
-    			add_location(ion_icon, file$6, 57, 8, 1985);
+    			add_location(ion_icon, file$6, 57, 8, 1984);
     			attr_dev(div1, "class", "footer svelte-ba5lgm");
-    			add_location(div1, file$6, 55, 4, 1909);
+    			add_location(div1, file$6, 55, 4, 1908);
     			attr_dev(div2, "data-index", /*id*/ ctx[0]);
     			attr_dev(div2, "class", "notes-card svelte-ba5lgm");
     			attr_dev(div2, "style", /*cardColorStyle*/ ctx[5]);
-    			add_location(div2, file$6, 52, 0, 1768);
+    			add_location(div2, file$6, 52, 0, 1767);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2000,25 +2014,6 @@ var app = (function () {
     	}
     }
 
-    const colors = writable([
-        {
-            id:1,
-            backGroundColor: "#c2e891",
-        },
-        {
-            id:2,
-            backGroundColor: "#d5e2f6",
-        },
-        {
-            id:3,
-            backGroundColor: "#dededf",
-        },
-        {
-            id:4,
-            backGroundColor: "#d9cdcf",
-        }
-    ]);
-
     let nanoid = (size = 21) =>
       crypto.getRandomValues(new Uint8Array(size)).reduce((id, byte) => {
         byte &= 63;
@@ -2039,22 +2034,24 @@ var app = (function () {
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[13] = list[i];
+    	child_ctx[12] = list[i];
+    	child_ctx[14] = i;
     	return child_ctx;
     }
 
-    // (50:12) {#each $colors as color}
-    function create_each_block$1(ctx) {
+    // (49:12) {#each colors as color,i(color.id)}
+    function create_each_block$1(key_1, ctx) {
+    	let first;
     	let colorbox;
     	let updating_selectedColor;
     	let current;
 
     	function colorbox_selectedColor_binding(value) {
-    		/*colorbox_selectedColor_binding*/ ctx[8](value);
+    		/*colorbox_selectedColor_binding*/ ctx[7](value);
     	}
 
     	let colorbox_props = {
-    		backGroundColor: /*color*/ ctx[13].backGroundColor
+    		backGroundColor: /*color*/ ctx[12].backGroundColor
     	};
 
     	if (/*selectedColor*/ ctx[2] !== void 0) {
@@ -2065,16 +2062,21 @@ var app = (function () {
     	binding_callbacks.push(() => bind(colorbox, 'selectedColor', colorbox_selectedColor_binding));
 
     	const block = {
+    		key: key_1,
+    		first: null,
     		c: function create() {
+    			first = empty();
     			create_component(colorbox.$$.fragment);
+    			this.first = first;
     		},
     		m: function mount(target, anchor) {
+    			insert_dev(target, first, anchor);
     			mount_component(colorbox, target, anchor);
     			current = true;
     		},
-    		p: function update(ctx, dirty) {
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
     			const colorbox_changes = {};
-    			if (dirty & /*$colors*/ 8) colorbox_changes.backGroundColor = /*color*/ ctx[13].backGroundColor;
 
     			if (!updating_selectedColor && dirty & /*selectedColor*/ 4) {
     				updating_selectedColor = true;
@@ -2094,6 +2096,7 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
+    			if (detaching) detach_dev(first);
     			destroy_component(colorbox, detaching);
     		}
     	};
@@ -2102,14 +2105,14 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(50:12) {#each $colors as color}",
+    		source: "(49:12) {#each colors as color,i(color.id)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (55:12) <Button  on:click={modalClose} >
+    // (54:12) <Button  on:click={modalClose} >
     function create_default_slot_1(ctx) {
     	let t_value = addForm.cancelButton + "";
     	let t;
@@ -2131,14 +2134,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_1.name,
     		type: "slot",
-    		source: "(55:12) <Button  on:click={modalClose} >",
+    		source: "(54:12) <Button  on:click={modalClose} >",
     		ctx
     	});
 
     	return block;
     }
 
-    // (56:12) <Button className="add">
+    // (55:12) <Button className="add">
     function create_default_slot(ctx) {
     	let t_value = addForm.addButton + "";
     	let t;
@@ -2160,7 +2163,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(56:12) <Button className=\\\"add\\\">",
+    		source: "(55:12) <Button className=\\\"add\\\">",
     		ctx
     	});
 
@@ -2178,6 +2181,8 @@ var app = (function () {
     	let div2;
     	let p;
     	let t3;
+    	let each_blocks = [];
+    	let each_1_lookup = new Map();
     	let t4;
     	let div3;
     	let button0;
@@ -2186,17 +2191,16 @@ var app = (function () {
     	let current;
     	let mounted;
     	let dispose;
-    	let each_value = /*$colors*/ ctx[3];
+    	let each_value = colors;
     	validate_each_argument(each_value);
-    	let each_blocks = [];
+    	const get_key = ctx => /*color*/ ctx[12].id;
+    	validate_each_keys(ctx, each_value, get_each_context$1, get_key);
 
     	for (let i = 0; i < each_value.length; i += 1) {
-    		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    		let child_ctx = get_each_context$1(ctx, each_value, i);
+    		let key = get_key(child_ctx);
+    		each_1_lookup.set(key, each_blocks[i] = create_each_block$1(key, child_ctx));
     	}
-
-    	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-    		each_blocks[i] = null;
-    	});
 
     	button0 = new Button({
     			props: {
@@ -2206,7 +2210,7 @@ var app = (function () {
     			$$inline: true
     		});
 
-    	button0.$on("click", /*modalClose*/ ctx[4]);
+    	button0.$on("click", /*modalClose*/ ctx[3]);
 
     	button1 = new Button({
     			props: {
@@ -2244,9 +2248,9 @@ var app = (function () {
     			input.required = true;
     			attr_dev(input, "placeholder", addForm.headingPlaceHolder);
     			attr_dev(input, "class", "svelte-wqvxyx");
-    			add_location(input, file$4, 42, 12, 1281);
+    			add_location(input, file$4, 41, 12, 1238);
     			attr_dev(div0, "class", "heading");
-    			add_location(div0, file$4, 41, 8, 1247);
+    			add_location(div0, file$4, 40, 8, 1204);
     			attr_dev(textarea, "name", "content");
     			textarea.required = true;
     			attr_dev(textarea, "id", "");
@@ -2254,18 +2258,18 @@ var app = (function () {
     			attr_dev(textarea, "placeholder", addForm.contentPlaceHolder);
     			attr_dev(textarea, "rows", addForm.contentCols);
     			attr_dev(textarea, "class", "svelte-wqvxyx");
-    			add_location(textarea, file$4, 45, 12, 1427);
+    			add_location(textarea, file$4, 44, 12, 1384);
     			attr_dev(div1, "class", "content");
-    			add_location(div1, file$4, 44, 8, 1393);
+    			add_location(div1, file$4, 43, 8, 1350);
     			attr_dev(p, "class", "svelte-wqvxyx");
-    			add_location(p, file$4, 48, 12, 1651);
+    			add_location(p, file$4, 47, 12, 1608);
     			attr_dev(div2, "class", "footer svelte-wqvxyx");
-    			add_location(div2, file$4, 47, 8, 1618);
+    			add_location(div2, file$4, 46, 8, 1575);
     			attr_dev(div3, "class", "button svelte-wqvxyx");
-    			add_location(div3, file$4, 53, 8, 1866);
+    			add_location(div3, file$4, 52, 8, 1834);
     			attr_dev(form, "class", "form svelte-wqvxyx");
     			attr_dev(form, "action", "");
-    			add_location(form, file$4, 40, 4, 1174);
+    			add_location(form, file$4, 39, 4, 1131);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2297,9 +2301,9 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[6]),
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[7]),
-    					listen_dev(form, "submit", prevent_default(/*addCard*/ ctx[5]), false, true, false)
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[5]),
+    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[6]),
+    					listen_dev(form, "submit", prevent_default(/*addCard*/ ctx[4]), false, true, false)
     				];
 
     				mounted = true;
@@ -2314,44 +2318,25 @@ var app = (function () {
     				set_input_value(textarea, /*content*/ ctx[1]);
     			}
 
-    			if (dirty & /*$colors, selectedColor*/ 12) {
-    				each_value = /*$colors*/ ctx[3];
+    			if (dirty & /*colors, selectedColor*/ 4) {
+    				each_value = colors;
     				validate_each_argument(each_value);
-    				let i;
-
-    				for (i = 0; i < each_value.length; i += 1) {
-    					const child_ctx = get_each_context$1(ctx, each_value, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    						transition_in(each_blocks[i], 1);
-    					} else {
-    						each_blocks[i] = create_each_block$1(child_ctx);
-    						each_blocks[i].c();
-    						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(div2, null);
-    					}
-    				}
-
     				group_outros();
-
-    				for (i = each_value.length; i < each_blocks.length; i += 1) {
-    					out(i);
-    				}
-
+    				validate_each_keys(ctx, each_value, get_each_context$1, get_key);
+    				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div2, outro_and_destroy_block, create_each_block$1, null, get_each_context$1);
     				check_outros();
     			}
 
     			const button0_changes = {};
 
-    			if (dirty & /*$$scope*/ 65536) {
+    			if (dirty & /*$$scope*/ 32768) {
     				button0_changes.$$scope = { dirty, ctx };
     			}
 
     			button0.$set(button0_changes);
     			const button1_changes = {};
 
-    			if (dirty & /*$$scope*/ 65536) {
+    			if (dirty & /*$$scope*/ 32768) {
     				button1_changes.$$scope = { dirty, ctx };
     			}
 
@@ -2369,8 +2354,6 @@ var app = (function () {
     			current = true;
     		},
     		o: function outro(local) {
-    			each_blocks = each_blocks.filter(Boolean);
-
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				transition_out(each_blocks[i]);
     			}
@@ -2381,7 +2364,11 @@ var app = (function () {
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(form);
-    			destroy_each(each_blocks, detaching);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].d();
+    			}
+
     			destroy_component(button0);
     			destroy_component(button1);
     			mounted = false;
@@ -2401,9 +2388,6 @@ var app = (function () {
     }
 
     function instance$4($$self, $$props, $$invalidate) {
-    	let $colors;
-    	validate_store(colors, 'colors');
-    	component_subscribe($$self, colors, $$value => $$invalidate(3, $colors = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('AddNoteForm', slots, []);
     	const dispatch = createEventDispatcher();
@@ -2411,7 +2395,7 @@ var app = (function () {
     	let id = nanoid();
     	let title = "";
     	let content = "";
-    	let selectedColor = get_store_value(colors)[0].backGroundColor;
+    	let selectedColor = colors[0].backGroundColor;
     	const options = { month: "short" };
 
     	function modalClose() {
@@ -2461,12 +2445,12 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		ColorBox,
-    		colors,
     		notes,
     		each,
     		get: get_store_value,
     		createEventDispatcher,
     		addForm,
+    		colors,
     		nanoid,
     		Button,
     		dispatch,
@@ -2477,8 +2461,7 @@ var app = (function () {
     		selectedColor,
     		options,
     		modalClose,
-    		addCard,
-    		$colors
+    		addCard
     	});
 
     	$$self.$inject_state = $$props => {
@@ -2497,7 +2480,6 @@ var app = (function () {
     		title,
     		content,
     		selectedColor,
-    		$colors,
     		modalClose,
     		addCard,
     		input_input_handler,
@@ -3104,23 +3086,23 @@ var app = (function () {
     			script1 = element("script");
     			attr_dev(link0, "rel", "preconnect");
     			attr_dev(link0, "href", "https://fonts.googleapis.com");
-    			add_location(link0, file$1, 8, 1, 234);
+    			add_location(link0, file$1, 8, 1, 233);
     			attr_dev(link1, "rel", "preconnect");
     			attr_dev(link1, "href", "https://fonts.gstatic.com");
     			attr_dev(link1, "crossorigin", "");
-    			add_location(link1, file$1, 9, 1, 295);
+    			add_location(link1, file$1, 9, 1, 294);
     			attr_dev(link2, "href", "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Varela+Round&display=swap");
     			attr_dev(link2, "rel", "stylesheet");
-    			add_location(link2, file$1, 10, 1, 365);
+    			add_location(link2, file$1, 10, 1, 364);
     			attr_dev(div0, "class", "notes-container svelte-3kj02k");
-    			add_location(div0, file$1, 12, 1, 521);
+    			add_location(div0, file$1, 12, 1, 520);
     			attr_dev(script0, "type", "module");
     			if (!src_url_equal(script0.src, script0_src_value = "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js")) attr_dev(script0, "src", script0_src_value);
-    			add_location(script0, file$1, 18, 1, 764);
+    			add_location(script0, file$1, 18, 1, 763);
     			script1.noModule = true;
     			if (!src_url_equal(script1.src, script1_src_value = "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js")) attr_dev(script1, "src", script1_src_value);
-    			add_location(script1, file$1, 19, 1, 866);
-    			add_location(div1, file$1, 7, 0, 227);
+    			add_location(script1, file$1, 19, 1, 865);
+    			add_location(div1, file$1, 7, 0, 226);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

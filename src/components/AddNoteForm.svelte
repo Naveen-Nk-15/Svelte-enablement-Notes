@@ -1,11 +1,10 @@
 <script>
     import ColorBox from "./ColorBox.svelte";
-    import colors from "../Stores/box-color";
-    import notes from "../Stores/notes-store"
+    import notes from "../stores/notesStore"
     import { each } from "svelte/internal";
     import { get } from "svelte/store";
     import { createEventDispatcher } from "svelte";
-    import {addForm} from "../constants/constants"
+    import {addForm , colors} from "../constants/constants"
     import { nanoid } from 'nanoid';
     import Button from "./Button.svelte";
     const dispatch = createEventDispatcher();
@@ -13,7 +12,7 @@
     let id = nanoid();
     let title = "";
     let content = "";
-    let selectedColor = get(colors)[0].backGroundColor;
+    let selectedColor = colors[0].backGroundColor;
     const options = { month: "short" };
     function modalClose()
     {
@@ -47,7 +46,7 @@
         </div>
         <div class="footer">
             <p>{addForm.background}</p>
-            {#each $colors as color}
+            {#each colors as color,i(color.id)}
                 <ColorBox backGroundColor={color.backGroundColor} bind:selectedColor={selectedColor}/>    
             {/each}
         </div>

@@ -2,7 +2,7 @@
 	import NotesCard from "../components/NotesCard.svelte";
 	import AddNotes from "../components/AddNotes.svelte";
 	import Header from "../components/Header.svelte";
-	import notes from "../Stores/notes-store";
+	import notes from "../stores/notesStore";
 </script>
 
 <div>

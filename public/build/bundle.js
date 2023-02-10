@@ -1101,7 +1101,7 @@ var app = (function () {
     			$$inline: true
     		});
 
-    	backdrop.$on("close-modal", /*toggleModal*/ ctx[7]);
+    	backdrop.$on("close-modal", /*toggleModal*/ ctx[8]);
 
     	const block = {
     		c: function create() {
@@ -1114,7 +1114,7 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const backdrop_changes = {};
 
-    			if (dirty & /*$$scope*/ 32768) {
+    			if (dirty & /*$$scope*/ 65536) {
     				backdrop_changes.$$scope = { dirty, ctx };
     			}
 
@@ -1155,7 +1155,7 @@ var app = (function () {
     			$$inline: true
     		});
 
-    	deletemodal.$on("cancel", /*toggleModal*/ ctx[7]);
+    	deletemodal.$on("cancel", /*toggleModal*/ ctx[8]);
     	deletemodal.$on("remove", /*deleteCard*/ ctx[6]);
 
     	const block = {
@@ -1204,8 +1204,12 @@ var app = (function () {
     	let div0;
     	let t4;
     	let t5;
+    	let ion_icon;
+    	let t6;
     	let if_block_anchor;
     	let current;
+    	let mounted;
+    	let dispose;
     	let if_block = /*popup*/ ctx[4] && create_if_block$2(ctx);
 
     	const block = {
@@ -1221,6 +1225,8 @@ var app = (function () {
     			div0 = element("div");
     			t4 = text(/*creationDate*/ ctx[3]);
     			t5 = space();
+    			ion_icon = element("ion-icon");
+    			t6 = space();
     			if (if_block) if_block.c();
     			if_block_anchor = empty();
     			attr_dev(h1, "class", "header svelte-ba5lgm");
@@ -1229,6 +1235,9 @@ var app = (function () {
     			add_location(p, file$6, 53, 4, 1497);
     			attr_dev(div0, "class", "date svelte-ba5lgm");
     			add_location(div0, file$6, 55, 8, 1563);
+    			set_custom_element_data(ion_icon, "class", "delete svelte-ba5lgm");
+    			set_custom_element_data(ion_icon, "name", "trash-outline");
+    			add_location(ion_icon, file$6, 56, 8, 1610);
     			attr_dev(div1, "class", "footer svelte-ba5lgm");
     			add_location(div1, file$6, 54, 4, 1534);
     			attr_dev(div2, "data-index", /*id*/ ctx[0]);
@@ -1250,10 +1259,17 @@ var app = (function () {
     			append_dev(div2, div1);
     			append_dev(div1, div0);
     			append_dev(div0, t4);
-    			insert_dev(target, t5, anchor);
+    			append_dev(div1, t5);
+    			append_dev(div1, ion_icon);
+    			insert_dev(target, t6, anchor);
     			if (if_block) if_block.m(target, anchor);
     			insert_dev(target, if_block_anchor, anchor);
     			current = true;
+
+    			if (!mounted) {
+    				dispose = listen_dev(ion_icon, "mousedown", /*mousedown_handler*/ ctx[14], false, false, false);
+    				mounted = true;
+    			}
     		},
     		p: function update(ctx, [dirty]) {
     			if (!current || dirty & /*title*/ 2) set_data_dev(t0, /*title*/ ctx[1]);
@@ -1302,9 +1318,11 @@ var app = (function () {
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div2);
-    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(t6);
     			if (if_block) if_block.d(detaching);
     			if (detaching) detach_dev(if_block_anchor);
+    			mounted = false;
+    			dispose();
     		}
     	};
 
@@ -1336,16 +1354,16 @@ var app = (function () {
     	let popup = false;
 
     	layout.subscribe(col => {
-    		$$invalidate(9, column = col);
+    		$$invalidate(10, column = col);
 
     		if (col == "2") {
-    			$$invalidate(11, cardHeight = "16rem");
-    			$$invalidate(12, flexMargins = "66px");
-    			$$invalidate(10, contentheight = "58%");
+    			$$invalidate(12, cardHeight = "16rem");
+    			$$invalidate(13, flexMargins = "66px");
+    			$$invalidate(11, contentheight = "58%");
     		} else {
-    			$$invalidate(11, cardHeight = "24rem");
-    			$$invalidate(12, flexMargins = "164px");
-    			$$invalidate(10, contentheight = "72%");
+    			$$invalidate(12, cardHeight = "24rem");
+    			$$invalidate(13, flexMargins = "164px");
+    			$$invalidate(11, contentheight = "72%");
     		}
     	});
 
@@ -1394,12 +1412,16 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<NotesCard> was created with unknown prop '${key}'`);
     	});
 
+    	const mousedown_handler = () => {
+    		deleteMyNote(id);
+    	};
+
     	$$self.$$set = $$props => {
     		if ('id' in $$props) $$invalidate(0, id = $$props.id);
     		if ('title' in $$props) $$invalidate(1, title = $$props.title);
     		if ('content' in $$props) $$invalidate(2, content = $$props.content);
     		if ('creationDate' in $$props) $$invalidate(3, creationDate = $$props.creationDate);
-    		if ('backGroundColor' in $$props) $$invalidate(8, backGroundColor = $$props.backGroundColor);
+    		if ('backGroundColor' in $$props) $$invalidate(9, backGroundColor = $$props.backGroundColor);
     	};
 
     	$$self.$capture_state = () => ({
@@ -1429,14 +1451,14 @@ var app = (function () {
     		if ('title' in $$props) $$invalidate(1, title = $$props.title);
     		if ('content' in $$props) $$invalidate(2, content = $$props.content);
     		if ('creationDate' in $$props) $$invalidate(3, creationDate = $$props.creationDate);
-    		if ('backGroundColor' in $$props) $$invalidate(8, backGroundColor = $$props.backGroundColor);
-    		if ('column' in $$props) $$invalidate(9, column = $$props.column);
-    		if ('contentheight' in $$props) $$invalidate(10, contentheight = $$props.contentheight);
-    		if ('cardHeight' in $$props) $$invalidate(11, cardHeight = $$props.cardHeight);
-    		if ('flexMargins' in $$props) $$invalidate(12, flexMargins = $$props.flexMargins);
+    		if ('backGroundColor' in $$props) $$invalidate(9, backGroundColor = $$props.backGroundColor);
+    		if ('column' in $$props) $$invalidate(10, column = $$props.column);
+    		if ('contentheight' in $$props) $$invalidate(11, contentheight = $$props.contentheight);
+    		if ('cardHeight' in $$props) $$invalidate(12, cardHeight = $$props.cardHeight);
+    		if ('flexMargins' in $$props) $$invalidate(13, flexMargins = $$props.flexMargins);
     		if ('deletingId' in $$props) deletingId = $$props.deletingId;
     		if ('popup' in $$props) $$invalidate(4, popup = $$props.popup);
-    		if ('toggleModal' in $$props) $$invalidate(7, toggleModal = $$props.toggleModal);
+    		if ('toggleModal' in $$props) $$invalidate(8, toggleModal = $$props.toggleModal);
     		if ('cardColorStyle' in $$props) $$invalidate(5, cardColorStyle = $$props.cardColorStyle);
     	};
 
@@ -1445,7 +1467,7 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*backGroundColor, cardHeight, flexMargins, column, contentheight*/ 7936) {
+    		if ($$self.$$.dirty & /*backGroundColor, cardHeight, flexMargins, column, contentheight*/ 15872) {
     			$$invalidate(5, cardColorStyle = `--note-color:${backGroundColor};
                         --card-height:${cardHeight};
                         --margin-constant:${flexMargins};
@@ -1462,12 +1484,14 @@ var app = (function () {
     		popup,
     		cardColorStyle,
     		deleteCard,
+    		deleteMyNote,
     		toggleModal,
     		backGroundColor,
     		column,
     		contentheight,
     		cardHeight,
-    		flexMargins
+    		flexMargins,
+    		mousedown_handler
     	];
     }
 
@@ -1480,7 +1504,7 @@ var app = (function () {
     			title: 1,
     			content: 2,
     			creationDate: 3,
-    			backGroundColor: 8
+    			backGroundColor: 9
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {

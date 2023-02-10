@@ -1,31 +1,32 @@
 <script>
-    import notes from "../Stores/notes-store"
-    import BackDrop from "./BackDrop.svelte";
-    import DeleteModal from "./DeleteModal.svelte";
+    import { cardDimensions } from "../constants/constants";
+    import notes from "../stores/notesStore"
+    import BackDrop from "./Modal.svelte";
+    import DeleteModal from "./DeletePopup.svelte";
     import layout from "../Stores/layout";
-    export let id;
-    export let title;
-    export let content;
-    export let creationDate;
-    export let backGroundColor;
-    let column;
-    let contentheight;
-    let cardHeight;
-    let flexMargins;
+    export let id = null;
+    export let title = "";
+    export let content = "Please add some";
+    export let creationDate = "";
+    export let backGroundColor = "";
+    let column = "5";
+    let contentheight = cardDimensions.fiveColContentHeight;
+    let cardHeight = cardDimensions.fiveColCardHeight;
+    let flexMargins = cardDimensions.fiveColFlexMargins;
     let deletingId = null;
     let popup = false;
     layout.subscribe(col => {
         column = col;
         if(col == "2")
         {
-            cardHeight = "16rem";
-            flexMargins = "66px";
-            contentheight = "58%";
+            cardHeight = cardDimensions.twoColCardHeight;
+            flexMargins = cardDimensions.twoColFlexMargins;
+            contentheight = cardDimensions.twoColContentHeight;
         }
         else{
-            cardHeight = "24rem";
-            flexMargins = "164px";
-            contentheight = "72%";
+            cardHeight = cardDimensions.fiveColCardHeight;
+            flexMargins = cardDimensions.fiveColFlexMargins;
+            contentheight = cardDimensions.fiveColContentHeight;
         }
     }) 
     $: cardColorStyle = `--note-color:${backGroundColor};

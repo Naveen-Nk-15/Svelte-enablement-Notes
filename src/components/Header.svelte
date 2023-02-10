@@ -1,7 +1,7 @@
 <script>
     import layout from "../Stores/layout";
-
-    let value;
+    import { header } from "../constants/constants";
+    let value = "5";
     layout.subscribe( val => {
         value = val;
     })
@@ -14,12 +14,12 @@
 
 
 <header class="head">
-    <div class="left">pocket notes</div>
+    <div class="left">{header.title}</div>
     <div class="right">
-        <div class="default">default view</div>
+        <div class="default">{header.defaultView}</div>
         <select bind:value={value} on:change={setLayout} class="dropdown" name="dropdown">
-            <option value="5">5 Column Format</option>
-            <option value="2">2 Column Format</option>
+            <option value={header.fiveColumnValue}>{header.fiveColumn}</option>
+            <option value={header.twoColumnValue}>{header.twoColumn}</option>
         </select>
     </div>
 </header>

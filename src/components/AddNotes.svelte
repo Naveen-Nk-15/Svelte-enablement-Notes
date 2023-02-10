@@ -1,23 +1,23 @@
 <script>
     import AddNoteForm from "./AddNoteForm.svelte";
-    import BackDrop from "./BackDrop.svelte";
+    import BackDrop from "./Modal.svelte";
     import layout from "../Stores/layout";
-    let column;
-    let cardHeight;
-    let flexMargins;
+    import {cardDimensions} from "../constants/constants"
+    let column = "5";
+    let cardHeight = cardDimensions.fiveColCardHeight;
+    let flexMargins = cardDimensions.fiveColFlexMargins;
     layout.subscribe(col => {
         column = col;
         if(col == "2")
         {
-            cardHeight = "16rem";
-            flexMargins = "66px";
+            cardHeight = cardDimensions.twoColCardHeight;
+            flexMargins = cardDimensions.twoColFlexMargins;
         }
         else{
-            cardHeight = "24rem";
-            flexMargins = "164px";
+            cardHeight = cardDimensions.fiveColCardHeight;
+            flexMargins = cardDimensions.fiveColFlexMargins;
         }
     }) 
-    console.log(cardHeight + flexMargins);
     $: cardColorStyle = `--card-height:${cardHeight};
                         --margin-constant:${flexMargins};
                         --col:${column};`;
@@ -31,8 +31,8 @@
     <div class="plus"><ion-icon name="add-circle"></ion-icon></div>
 </button>
 {#if popup}
-    <BackDrop title="new note" on:close-modal={toggleModal}>
-        <AddNoteForm on:close-modal={toggleModal} slot="content"/>
+    <BackDrop title="new note" on:closeModal={toggleModal}>
+        <AddNoteForm on:closeModal={toggleModal} slot="content"/>
     </BackDrop>
 {/if}
 

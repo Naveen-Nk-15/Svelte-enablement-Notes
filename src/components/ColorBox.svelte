@@ -1,6 +1,6 @@
 <script>
-    export let backGroundColor;
-    export let selectedColor;
+    export let backGroundColor = "#fff";
+    export let selectedColor = "#fff";
     $: boxColorStyle = `--box-color:${backGroundColor};`;
     function updateSelectedColor(){
         selectedColor = backGroundColor;

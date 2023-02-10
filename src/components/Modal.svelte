@@ -1,10 +1,10 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    export let title;
+    export let title = "";
     const dispatch = createEventDispatcher();
     function modalClose()
     {
-        dispatch("close-modal");
+        dispatch("closeModal");
     }
 </script>
 

@@ -5,31 +5,34 @@
     import { each } from "svelte/internal";
     import { get } from "svelte/store";
     import { createEventDispatcher } from "svelte";
+    import {addForm} from "../constants/constants"
+    import { nanoid } from 'nanoid';
+    import Button from "./Button.svelte";
     const dispatch = createEventDispatcher();
     let allNotes = get(notes);
-    let id = allNotes[allNotes.length-1] ? allNotes[allNotes.length-1].id+1 : 1;
+    let id = nanoid();
     let title = "";
     let content = "";
     let selectedColor = get(colors)[0].backGroundColor;
-    const month = ["jan","feb","mar","apr","may","jun","jul","aug","sept","oct","nov","dec"]
+    const options = { month: "short" };
     function modalClose()
     {
-        dispatch("close-modal");
+        dispatch("closeModal");
     }
     function addCard(event)
     {
         var date = new Date()
-        let createdBy=date.getDate()+" "+month[date.getMonth()]; 
+        let createdBy=date.getDate()+" "+date.toLocaleString('default',options); 
         notes.update( notes =>{
-            return [...notes, {
-                id : id,
-                title : title,
-                content : content,
+            return [{
+                id,
+                title,
+                content,
                 backGroundColor : selectedColor,
                 creationDate : createdBy
-            }]
+            },...notes ]
         })
-        dispatch("close-modal");
+        dispatch("closeModal");
     }
     
 </script>
@@ -37,20 +40,20 @@
 
     <form class="form" action="" on:submit|preventDefault={addCard}>
         <div class="heading">
-            <input type="text" bind:value={title} required placeholder="Note Title">
+            <input type="text" bind:value={title} required placeholder={addForm.headingPlaceHolder}>
         </div>
         <div class="content">
-            <textarea name="content" bind:value={content} required id="" cols="15" placeholder="Say Something" rows="7"></textarea>
+            <textarea name="content" bind:value={content} required id="" cols={addForm.contentCols} placeholder={addForm.contentPlaceHolder} rows={addForm.contentCols}></textarea>
         </div>
         <div class="footer">
-            <p>notes background</p>
+            <p>{addForm.background}</p>
             {#each $colors as color}
                 <ColorBox backGroundColor={color.backGroundColor} bind:selectedColor={selectedColor}/>    
             {/each}
         </div>
         <div class="button">
-            <button on:click|preventDefault={modalClose}>cancel</button>
-            <button  class="add">add</button>
+            <Button  on:click={modalClose} >{addForm.cancelButton}</Button>
+            <Button className="add">{addForm.addButton}</Button>
         </div>
     </form>
     
@@ -89,20 +92,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        .add{
-            background-color: $add-button-color;
-            color: $form-background-color;
-            padding: 0.5rem 2.5rem;
-        }
-        button{
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            margin: 2rem 1rem 0 0;
-            padding: 0.5rem 1.5rem;
-            border: 0;
-            cursor: pointer;
-        }
     }
 
 </style>
